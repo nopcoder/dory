@@ -67,24 +67,26 @@ static void InstallSignalHandlers(initializer_list<int> signals,
 }
 
 void Server::BacktraceToLog() {
-  static const int max_frame_count = 100;
-  void *frames[max_frame_count];
-  // int frame_count = backtrace(frames, max_frame_count);
-  // char **symbols = backtrace_symbols(frames, frame_count);
 
-  // Yet another rabbit hole: no execinfo.h in MUSL: http://www.openwall.com/lists/musl/2015/04/09/3
+  // Yet another rabbit hole: no execinfo.h in musl: http://www.openwall.com/lists/musl/2015/04/09/3
+  //
+  //static const int max_frame_count = 100;
+  //void *frames[max_frame_count];
+  //int frame_count = backtrace(frames, max_frame_count);
+  //char **symbols = backtrace_symbols(frames, frame_count);
+  //
+  //if (symbols) {
+  //  for (int frame_idx = 0; frame_idx < frame_count; ++frame_idx) {
+  //    syslog(LOG_ERR, "[backtrace][frame %d of %d][%s]", frame_idx + 1,
+  //           frame_count, symbols[frame_idx]);
+  //  }
+  //
+  //  free(symbols);
+  //} else {
+  //    syslog(LOG_ERR, "[backtrace][failed to get %d frames]", frame_count);
+  //}
 
-  /*if (symbols) {
-    for (int frame_idx = 0; frame_idx < frame_count; ++frame_idx) {
-      syslog(LOG_ERR, "[backtrace][frame %d of %d][%s]", frame_idx + 1,
-             frame_count, symbols[frame_idx]);
-    }
-
-    free(symbols);
-  } else {
-      syslog(LOG_ERR, "[backtrace][failed to get %d frames]", frame_count);
-  }*/
-  syslog(LOG_ERR, "I'm just a sorry stub");
+  syslog(LOG_ERR, "I'm just a sorry stub for now.");
 }
 
 pid_t Server::Daemonize() {

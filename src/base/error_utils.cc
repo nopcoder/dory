@@ -82,6 +82,12 @@ namespace Base {
   const char *strerror_r_inner_wrapper(char *ret_value, char *ignored) {
     /* Wrapper for GNU-specific version of strerror_r() Its return type is
        'char *'. */
+
+    /* Icky hack to get around unused-parameter errors :( */
+    if (ignored) {
+        return ret_value;
+    }
+
     return ret_value;
   }
 
