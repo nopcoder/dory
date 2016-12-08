@@ -40,9 +40,9 @@ namespace Dory {
     NO_COPY_SEMANTICS(TStreamClientWorkFn);
 
     public:
-    explicit TStreamClientWorkFn(nullptr_t) noexcept;
+    explicit TStreamClientWorkFn(std::nullptr_t) noexcept;
 
-    TStreamClientWorkFn &operator=(nullptr_t) noexcept;
+    TStreamClientWorkFn &operator=(std::nullptr_t) noexcept;
 
     void operator()();
 

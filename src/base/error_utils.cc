@@ -30,13 +30,46 @@ namespace Base {
     assert(buf);
     assert(buf_size);
 
-    /* The man page for strerror_r explains all of this ugliness. */
+// Running into issues building against musl libc with the preprocessor here. Falling into
+// the GNU-specific variant of the reentrant strerror_r function while the XSI-compliant
+// version is what's actually supported. Testing against the return value of strerror_r 
+// at run/compile(?) time may be safer than relying on macros to determine which version is 
+// supported? Not aware of any downsides.
+//
+// xref:
+//   * https://github.com/chriskohlhoff/asio/issues/94
+//   * http://zverovich.net/2015/03/13/reliable-detection-of-strerror-variants.html
+//
+//    /* The man page for strerror_r explains all of this ugliness. */
+//
+//#if ((_POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600) && ! _GNU_SOURCE)
+//
+//    // Here's one rabbit hole: https://github.com/chriskohlhoff/asio/issues/94
+//
+//    /* This is the XSI-compliant version of strerror_r(). */
+//    int err = strerror_r(errno_value, buf, buf_size);
+//
+//    if (err) {
+//      /* In the unlikely event that something went wrong, make the buffer
+//         contain the empty string, in case it would otherwise be left with
+//         arbitrary junk. */
+//      buf[0] = '\0';
+//    }
+//
+//    return buf;
+//#else
+//    /* This is the GNU-specific version of strerror_r().  Its return type is
+//       'char *'. */
+//    return strerror_r(errno_value, buf, buf_size);
+//#endif
 
-#if ((_POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600) && ! _GNU_SOURCE)
-    /* This is the XSI-compliant version of strerror_r(). */
-    int err = strerror_r(errno_value, buf, buf_size);
+    return strerror_r_inner_wrapper(strerror_r(errno_value, buf, buf_size), buf);
+  }
 
-    if (err) {
+  const char *strerror_r_inner_wrapper(int ret_value, char *buf) {
+    /* Wrapper for XSI-compliant version of strerror_r(). */
+
+    if (ret_value /* err */) {
       /* In the unlikely event that something went wrong, make the buffer
          contain the empty string, in case it would otherwise be left with
          arbitrary junk. */
@@ -44,11 +77,12 @@ namespace Base {
     }
 
     return buf;
-#else
-    /* This is the GNU-specific version of strerror_r().  Its return type is
+  }
+
+  const char *strerror_r_inner_wrapper(char *ret_value, char *ignored) {
+    /* Wrapper for GNU-specific version of strerror_r() Its return type is
        'char *'. */
-    return strerror_r(errno_value, buf, buf_size);
-#endif
+    return ret_value;
   }
 
 }  // Base

@@ -24,10 +24,18 @@
 #include <cassert>
 #include <cerrno>
 
+/* I think <fcntl.h> vs <sys/fcntl.h> should be used here, both seem to work on 
+   Debian/CentOS, but compilation fails using <sys/fcntl.h> under musl libc.
+
+   xref:
+   * http://lists.jedsoft.org/lists/slang-users/2015/0000028.html
+   * http://pubs.opengroup.org/onlinepubs/009695399/functions/fcntl.html
+*/
+#include <fcntl.h>
 #include <poll.h>
 #include <unistd.h>
-#include <sys/fcntl.h>
 #include <sys/socket.h>
+// #include <sys/fcntl.h>
 #include <sys/stat.h>
 
 #include <base/error_utils.h>

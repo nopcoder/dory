@@ -198,6 +198,9 @@
              hosts are recommended to guard against the case where a single
              specified host is down.
           -->
-        <broker host="kafkahost" port="9092" />
+        <broker host="devcsk-azure-central-1" port="9092" />
+        <broker host="devcsk-azure-east-1" port="9092" />
+        <broker host="devcsk-gce-central-1-09sd" port="9092" />
+        <broker host="devcsk-gce-east-1-10lp" port="9092" />
     </initialBrokers>
 </doryConfig>

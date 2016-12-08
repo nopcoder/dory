@@ -82,4 +82,10 @@ namespace Base {
      return value must be assumed to not exceed the lifetime of 'buf'. */
   const char *Strerror(int errno_value, char *buf, size_t buf_size);
 
+  /* Inner wrapper for XSI-compliant version of strerror_r */
+  const char *strerror_r_inner_wrapper(int ret_value, char *buf);
+
+  /* Inner wrapper for GNU-specific version of strerror_r */
+  const char *strerror_r_inner_wrapper(char *ret_value, char *ignored);
+
 }  // Base

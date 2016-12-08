@@ -60,7 +60,7 @@ SERVER_COUNTER(UnixStreamInputSocketGotData);
 SERVER_COUNTER(UnixStreamInputSocketRead);
 SERVER_COUNTER(UnixStreamInputUncleanDisconnect);
 
-TStreamClientWorkFn::TStreamClientWorkFn(nullptr_t) noexcept
+TStreamClientWorkFn::TStreamClientWorkFn(std::nullptr_t) noexcept
     : IsTcp(false),
       Config(nullptr),
       Pool(nullptr),
@@ -71,7 +71,7 @@ TStreamClientWorkFn::TStreamClientWorkFn(nullptr_t) noexcept
 }
 
 TStreamClientWorkFn &TStreamClientWorkFn::TStreamClientWorkFn::operator=(
-    nullptr_t) noexcept {
+    std::nullptr_t) noexcept {
   assert(this);
   IsTcp = false;
   Config = nullptr;

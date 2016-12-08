@@ -209,14 +209,14 @@ class TStressTest1WorkFn {
 
 class TStressTest2WorkFn {
   public:
-  explicit TStressTest2WorkFn(nullptr_t)
+  explicit TStressTest2WorkFn(std::nullptr_t)
       : Pool(nullptr),
         Counter(nullptr),
         WorkingCount(nullptr),
         RemainingCount(1) {
   }
 
-  TStressTest2WorkFn &operator=(nullptr_t) {
+  TStressTest2WorkFn &operator=(std::nullptr_t) {
     assert(this);
     Clear();
     return *this;

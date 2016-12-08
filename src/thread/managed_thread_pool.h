@@ -45,7 +45,7 @@ namespace Thread {
              TWorkCallable is a class then an assigment operator method such as
              this would satisfy the requirement:
 
-                 TWorkCallable &TWorkCallable::operator=(nullptr_t);
+                 TWorkCallable &TWorkCallable::operator=(std::nullptr_t);
 
              The assignment should have the effect of releasing any resources
              held within the function object, and should not throw.  Any
